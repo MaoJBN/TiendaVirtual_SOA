@@ -4,12 +4,12 @@
     box-sizing: border-box;
 }
 
-body, html {
+section, html {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to bottom, #4facfe, #ffffff);
+    background: linear-gradient(to bottom, #F8F9FA, #4facfe);
     font-family: Arial, sans-serif;
 }
 
@@ -20,9 +20,12 @@ label {
     margin-bottom: 5px; 
 }
 
+.register-box{
+  padding: 20px;
+}
 
 .register-container {
-    width: 350px;
+    width: 650px;
     padding: 20px;
     background: #ffffff;
     border-radius: 10px;
