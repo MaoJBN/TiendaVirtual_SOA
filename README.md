@@ -6,4 +6,4 @@ Por:
 - Mauricio Jehová Becerra Navarro
 - Andrea Camila Uribe
 
-📄 Consulta la documentación completa [aquí](docs/README.md).
+📄 Consulta la documentación completa [aquí](TiendaVirtual_SOA/docs/README.md).
