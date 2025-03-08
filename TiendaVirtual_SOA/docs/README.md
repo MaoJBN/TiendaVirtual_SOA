@@ -1,59 +1,68 @@
-# TiendaVirtualSOA
+# Tienda Virtual SOA
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.8.
+## Introducción
+Tienda Virtual SOA es un proyecto web desarrollado en Angular que permite a los usuarios registrarse e iniciar sesión para explorar y comprar productos de manera sencilla y segura. El sistema cuenta con una interfaz intuitiva y funcionalidades que mejoran la experiencia de compra en línea.
 
-## Development server
+## Objetivo y Alcance
+### Objetivo
+El objetivo del proyecto es desarrollar una tienda en línea eficiente y segura donde los usuarios puedan navegar por un catálogo de productos, agregarlos al carrito de compras y realizar transacciones de manera rápida y confiable.
 
-To start a local development server, run:
+### Alcance
+- Implementación de un sistema de autenticación de usuarios (registro y login).
+- Gestión de productos con detalles como precio, descripción e imágenes.
+- Carrito de compras con opciones para agregar y eliminar productos.
+- Integración de pasarela de pagos.
+- Panel de administración para gestionar productos y usuarios.
+- Diseño responsivo para una experiencia óptima en dispositivos móviles y computadoras.
 
-```bash
-ng serve
+## Problemática
+Actualmente, muchas tiendas en línea presentan interfaces poco intuitivas y procesos de compra engorrosos, lo que puede desmotivar a los usuarios y reducir las ventas. Tienda Virtual SOA busca solucionar este problema ofreciendo una experiencia fluida y accesible, optimizando el flujo de compra y mejorando la seguridad en las transacciones.
+
+## Impacto Esperado
+- Facilitar el acceso a productos mediante una interfaz intuitiva.
+- Mejorar la experiencia de usuario en compras en línea.
+- Aumentar la seguridad en las transacciones.
+- Posibilitar a pequeñas y medianas empresas digitalizar sus ventas.
+
+## Tecnologías Utilizadas
+- **Frontend:** Angular
+- **Backend:** ...
+- **Base de Datos:** Firebase
+- **Autenticación:** JWT
+- **Despliegue:** Firebase Hosting / Vercel / AWS
+
+## Gestión del Proyecto
+Para la gestión del desarrollo, se utilizarán herramientas colaborativas:
+- **Jira**: Para la planificación y seguimiento de tareas.
+- **GitHub**: Para el control de versiones y colaboración en el código.
+- **Angular**: Framework usado para la creacion y estructuracion del proyecto
+- **VSCode**: Entorno de desarrollo del proyecto por su personalizacion y compatibilidad gracias a sus extenciones
+- **Bootstrap**: Framework usado para el estilado del proyecto
+- **FireBase**: Usado para la generacion de la base de datos
+
+
+## Roles del Equipo
+- **Scrum Master - Kevin:** Facilita el desarrollo ágil y la comunicación en el equipo.
+- **Desarrollador Frontend - Andrea:** Implementa la interfaz en Angular.
+- **Desarrollador Backend - Mauricio :** Desarrolla la lógica del servidor y la base de datos.
+
+## Instalación y Ejecución
+```sh
+# Clonar el repositorio
+git clone https://github.com/usuario/tienda-virtual-soa.git
+
+# Navegar al directorio del proyecto
+cd tienda-virtual-soa
+
+# Instalar dependencias
+npm install
+
+# Ejecutar la aplicación en modo desarrollo
+ng serve --open
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Contribución
+Si deseas contribuir al proyecto, puedes hacerlo a través de Pull Requests en GitHub. Asegúrate de seguir las buenas prácticas de desarrollo y mantener un código limpio y documentado.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+🚀 **Tienda Virtual SOA** - Innovando la experiencia de compra en línea.
