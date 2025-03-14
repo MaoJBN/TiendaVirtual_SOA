@@ -3,16 +3,34 @@
     <div class="login-container">
         <div class="login-box">
             <h2>Iniciar Sesión</h2>
-            <form>
+            <form [formGroup]="loginForm" (ngSubmit)="enviarFormulario()">
                 <div class="input-group">
-                    <label for="username">Usuario</label>
-                    <input type="text" id="username" placeholder="Ingresa tu usuario">
+                    <label for="email">Correo</label>
+                    <input type="email" id="email" placeholder="Ingresa tu correo electrónico" formControlName="email">
+
+
+                    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                        <small *ngIf="loginForm.get('email')?.errors?.['required']">El correo es obligatorio.</small>
+                        <small *ngIf="loginForm.get('email')?.errors?.['email']">Formato de correo inválido.</small>
+                    </div>
+ 
                 </div>
+
+
+
                 <div class="input-group">
                     <label for="password">Contraseña</label>
-                    <input type="password" id="password" placeholder="Ingresa tu contraseña">
+                    <input type="password" id="password" placeholder="Ingresa tu contraseña" formControlName="password">
+
+
+                    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                        <small *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</small>
+                        <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Debe tener al menos 6 caracteres.</small>
+                    </div>
                 </div>
-                <button type="submit" class="login-btn">Ingresar</button>
+
+                
+                <button type="submit" class="login-btn" [disabled]="loginForm.invalid">Ingresar</button>
             </form>
             <a href="#" class="link">¿Olvidaste tu contraseña?</a>
         </div>
