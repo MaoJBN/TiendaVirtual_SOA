@@ -127,3 +127,10 @@ section {
 .link:hover {
     text-decoration: underline;
 }
+
+.google-img {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+}

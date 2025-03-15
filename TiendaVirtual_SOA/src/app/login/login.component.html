@@ -31,6 +31,10 @@
 
                 
                 <button type="submit" class="login-btn" [disabled]="loginForm.invalid">Ingresar</button>
+                <button type="button" class="login-btn mt-3" (click)="loginWithGoogle()">
+                    <img src="/google.svg" alt="Google Icon" class="google-img">
+                    Iniciar sesión con Google
+                </button>
             </form>
             <a href="#" class="link">¿Olvidaste tu contraseña?</a>
         </div>
