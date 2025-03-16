@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,10 +14,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(4), Validators.pattern(/^[a-zA-Z0-9_]+$/)]],
       email: ['', [Validators.required, Validators.email]],
@@ -23,13 +24,29 @@ export class RegisterComponent {
     });
   }
 
-
   enviarFormulario() {
     if (this.registerForm.valid) {
-      console.log('Formulario enviado:', this.registerForm.value);
+      const { email, password } = this.registerForm.value;
+
+      this.authService.register(email, password).subscribe({
+        next: () => {
+          console.log('✅ Registro exitoso');
+          this.router.navigate(['/dashboard']); // Redirige tras éxito
+        },
+        error: (err) => console.error('❌ Error en el registro:', err)
+      });
     } else {
       this.registerForm.markAllAsTouched();
     }
   }
-}
 
+  loginWithGoogle() {
+    this.authService.loginWithGoogle().subscribe({
+      next: () => {
+        console.log('✅ Registro con Google exitoso');
+        this.router.navigate(['/dashboard']); // Redirige tras éxito
+      },
+      error: (err) => console.error('❌ Error al registrar con Google:', err)
+    });
+  }
+}
