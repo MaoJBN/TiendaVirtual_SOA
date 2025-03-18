@@ -38,7 +38,7 @@ Para la gestión del desarrollo, se utilizarán herramientas colaborativas:
 - **Angular**: Framework usado para la creacion y estructuracion del proyecto
 - **VSCode**: Entorno de desarrollo del proyecto por su personalizacion y compatibilidad gracias a sus extenciones
 - **Bootstrap**: Framework usado para el estilado del proyecto
-- **FireBase**: Usado para la generacion de la base de datos
+- **FireBase**: Usado para la generacion del sistema de autenticacion 
 
 
 ## Roles del Equipo

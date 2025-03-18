@@ -6,4 +6,8 @@ Por:
 - Mauricio Jehová Becerra Navarro
 - Andrea Camila Uribe
 
-📄 Consulta la documentación completa [aquí](TiendaVirtual_SOA/docs/README.md).
+📄 Consulta la documentación general [aquí](TiendaVirtual_SOA/docs/README.md).
+
+📄 Consulta la documentación backend [aquí](TiendaVirtual_SOA/docs/backend.md).
+
+📄 Consulta la documentación frontend [aquí](TiendaVirtual_SOA/docs/frontend.md).
