@@ -7,7 +7,8 @@ import {
   GoogleAuthProvider, 
   signInWithPopup,  // 🔹 Agregado
   User, 
-  UserCredential   // 🔹 Agregado
+  UserCredential,   // 🔹 Agregado
+  sendPasswordResetEmail // Agregado 
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable, from } from 'rxjs';
@@ -50,4 +51,17 @@ export class AuthService {
   getCurrentUser(): User | null {
     return this.auth.currentUser;
   }
+
+  //para recuperar contraseña
+  forgotPassword(email: string): Observable<void> {
+    return from(sendPasswordResetEmail(this.auth, email)).pipe(
+      catchError(error => {
+        console.error('Error al recuperar contraseña:', error);
+        throw error;
+      })
+    );
+  }
+
+
+
 }
