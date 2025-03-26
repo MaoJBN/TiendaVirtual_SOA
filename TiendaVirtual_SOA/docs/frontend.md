@@ -1,38 +1,60 @@
-# Proyecto frontend - Tienda virtual SOA 
+# Proyecto Frontend - Tienda Virtual SOA  
 
-**Tienda virtual SOA**, para la venta de productos en línea. Permite a los usuarios navegar por una variedad de productos, agregarlos al carrito, y proceder con la compra. También incluye funciones de autenticación de usuarios, administración de productos, y la gestión del carrito de compras.
+## Organización de carpetas y archivos dentro del proyecto  
 
-#### Construcción del proyecto 
-Este proyecto está construido con Angular 
+```plaintext
+/src/app
+  ├── forgot-password/      # Componente para recuperación de contraseña
+  ├── home/                 # Página principal
+  ├── login/                # Componente de inicio de sesión
+  ├── navbar/               # Barra de navegación
+  ├── register/             # Componente de registro de usuarios
+  ├── services/             # Servicios para comunicación con backend
+  ├── app.component.css     # Estilos globales del componente raíz
+  ├── app.component.html    # Plantilla principal del componente raíz
+  ├── app.component.spec.ts # Pruebas unitarias del componente raíz
+  ├── app.component.ts      # Lógica del componente raíz
+  ├── app.config.server.ts  # Configuración específica del servidor
+  ├── app.config.ts         # Configuración general de la aplicación
+  ├── app.routes.server.ts  # Definición de rutas específicas del servidor
+  ├── app.routes.ts         # Definición de rutas de la aplicación
 
-![Angular icon](https://styles.redditmedia.com/t5_2w94a/styles/communityIcon_k45jrr5e1uhe1.png)
+/src/environments
+  ├── environment.ts        # Configuración de variables de entorno para desarrollo
 
-**Angular es una plataforma y un framework para crear aplicaciones de una sola página en el lado del cliente usando HTML y TypeScript. Angular está escrito en TypeScript. Implementa la funcionalidad básica y opcional como un conjunto de bibliotecas TypeScript que importas en tus aplicaciones.**
+```
 
-#### Tecnologías implementadas:
-- TypesScript: Lenguaje de programación basado en JavaScript que añade tipado estático.
-- Bootstrap: Framework CSS para diseñar interfaces de usuario responsivas y móviles.
-- Node.js: Entorno de ejecución de JavaScript para la creación de servidores y herramientas de línea de comandos.
-- NPM: Gestor de paquetes de Node.js, utilizado para manejar dependencias.
+## Componentes clave
+- NavbarComponent: Barra de navegación.
+- LoginComponent: Página de inicio de sesión.
+- RegisterComponent: Página de registro.
+- ForgotPasswordComponent: Página de recuperación de contraseña.
+
+## Servicios 
+- AuthService: Manejo de autenticación (login, logout, registro).
+
+## Rutas y navegación 
+**De esta manera están definidas las rutas en app.routes.ts**
+
+```typescript
+export const routes: Routes = [
+    { path: '', redirectTo: 'home', pathMatch: 'full' }, 
+    { path: 'home', component: HomeComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: 'forgot-password', component: ForgotPasswordComponent }, 
+    { path: '**', redirectTo: 'home' } 
+];
+```
+## Manejo de formularios y validaciones 
+**Se implementaron validaciones reactivas en los formularios utilizando FormGroup y FormControl en Angular.**
+
+- Campo obligatorio (required): El usuario debe ingresar un correo.
+- Validación de formato (email): El correo debe tener un formato válido. 
 
 
-#### Funcionalidades: 
-Este proyecto incluye las siguientes características:
-- Registro de usuarios 
-- Autenticación de usuarios 
-- Carrito de compras 
-- Listado de productos 
-
-#### Instalación 
-**Antes de comenzar, asegúrate de tener instalados los siguientes programas:**
-- Node js
-- Angular CLI: instalado globalmente para ejecutar comandos de Angular. Puedes instalarlo con el siguiente comando: npm install -g @angular/cli
-
-
-#### Versiones 
-- Node.js: v16.x o superior (verificada en v22.14.0)
-- Angular: Asegúrate de tener la misma versión de Angular que se usa en este proyecto.
-- NPM: La versión de NPM se instala automáticamente con Node.js, pero si necesitas verificarla, puedes hacerlo en consola con: npm-v 
+## Integración con herramientas externas 
+**Este proyecto utiliza Firebase para la autenticación y almacenamiento de datos.**
 
 
 
