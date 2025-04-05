@@ -5,6 +5,7 @@ import {
   signOut, 
   createUserWithEmailAndPassword, 
   GoogleAuthProvider, 
+  GithubAuthProvider,
   signInWithPopup,  // 🔹 Agregado
   User, 
   UserCredential,   // 🔹 Agregado
@@ -41,6 +42,13 @@ export class AuthService {
     const provider = new GoogleAuthProvider();
     return from(signInWithPopup(this.auth, provider));
   }
+
+  // Iniciar sesión con GitHub
+  loginWithGitHub(): Observable<UserCredential> {
+    const provider = new GithubAuthProvider();
+    return from(signInWithPopup(this.auth, provider));
+  }
+
 
   // Cerrar sesión
   logout(): Observable<void> {
