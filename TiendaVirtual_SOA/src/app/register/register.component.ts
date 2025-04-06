@@ -6,11 +6,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { LoginWithGitComponent } from "../login-with-git/login-with-git.component";
+import { LoginWithGoogleComponent } from "../login-with-google/login-with-google.component";
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, ReactiveFormsModule, LoginWithGitComponent],
+  imports: [NavbarComponent, CommonModule, ReactiveFormsModule, LoginWithGitComponent, LoginWithGoogleComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -41,13 +42,13 @@ export class RegisterComponent {
     }
   }
 
-  loginWithGoogle() {
-    this.authService.loginWithGoogle().subscribe({
-      next: () => {
-        console.log('✅ Registro con Google exitoso');
-        this.router.navigate(['/dashboard']); // Redirige tras éxito
-      },
-      error: (err) => console.error('❌ Error al registrar con Google:', err)
-    });
-  }
+  // loginWithGoogle() {
+  //   this.authService.loginWithGoogle().subscribe({
+  //     next: () => {
+  //       console.log('✅ Registro con Google exitoso');
+  //       this.router.navigate(['/dashboard']); // Redirige tras éxito
+  //     },
+  //     error: (err) => console.error('❌ Error al registrar con Google:', err)
+  //   });
+  // }
 }
