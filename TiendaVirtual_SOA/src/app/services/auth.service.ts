@@ -9,7 +9,8 @@ import {
   signInWithPopup,  // 🔹 Agregado
   User, 
   UserCredential,   // 🔹 Agregado
-  sendPasswordResetEmail // Agregado 
+  sendPasswordResetEmail, // Agregado 
+  FacebookAuthProvider 
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable, from } from 'rxjs';
@@ -69,6 +70,13 @@ export class AuthService {
       })
     );
   }
+
+  // Iniciar sesión con facebook
+  loginWithFacebook(): Observable<UserCredential> {
+    const provider = new FacebookAuthProvider();
+    return from(signInWithPopup(this.auth, provider));
+  }
+  
 
 
 
