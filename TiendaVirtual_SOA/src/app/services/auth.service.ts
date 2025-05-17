@@ -10,7 +10,8 @@ import {
   User, 
   UserCredential,   // 🔹 Agregado
   sendPasswordResetEmail, // Agregado 
-  FacebookAuthProvider 
+  FacebookAuthProvider,
+  authState,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable, from } from 'rxjs';
@@ -21,7 +22,12 @@ import { catchError } from 'rxjs/operators';
 })
 export class AuthService {
 
-  constructor(private auth: Auth, private router: Router) {}
+  user$: Observable<User | null>;
+
+constructor(private auth: Auth, private router: Router) {
+  this.user$ = authState(this.auth);  // observable que emite el usuario o null si no hay sesión
+}
+
 
   // Registro de usuario
   register(email: string, password: string): Observable<any> {
@@ -77,6 +83,18 @@ export class AuthService {
     return from(signInWithPopup(this.auth, provider));
   }
   
+
+
+  // ... tus métodos existentes aquí ...
+
+  // Método para saber si el usuario está logueado, devuelve true o false (como observable)
+  isLoggedIn(): Observable<boolean> {
+    return new Observable<boolean>(subscriber => {
+      this.user$.subscribe(user => {
+        subscriber.next(!!user); // true si hay usuario, false si es null
+      });
+    });
+  }
 
 
 

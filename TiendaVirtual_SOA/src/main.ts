@@ -10,6 +10,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(firebaseConfig.firebaseConfig)),
-    provideAuth(() => getAuth()),
+    provideAuth(() => getAuth())
   ]
 }).catch(err => console.error(err));
+
