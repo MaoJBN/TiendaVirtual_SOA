@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { routes } from './app/app.routes'; 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { firebaseConfig } from './environments/environment';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+
 @NgModule({
   imports: [
     BrowserModule,
