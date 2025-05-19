@@ -17,4 +17,10 @@ export class NavbarComponent {
     this.isLoggedIn$ = this.authService.isLoggedIn();
     console.log(this.isLoggedIn$);
   }
+  logout() {
+    this.authService.logout().subscribe({
+      next: () => console.log('Sesión cerrada'),
+      error: err => console.error('Error al cerrar sesión', err)
+    });
+  }
 }
