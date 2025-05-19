@@ -1,0 +1,73 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between mb-3">
+    <h2>Lista de Productos</h2>
+    <button class="btn btn-success" (click)="addProduct()">
+      <i class="fa fa-plus"></i> Agregar Producto
+    </button>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col" class="text-center">#</th>
+          <th scope="col" class="text-center">Imagen</th>
+          <th scope="col" class="text-center">Nombre</th>
+          <th scope="col" class="text-center">Descripción</th>
+          <th scope="col" class="text-center">Precio</th>
+          <th scope="col" class="text-center">Stock</th>
+          <th scope="col" class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products; let i = index">
+          <td class="text-center align-middle">{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+          <td class="text-center align-middle">
+            <img [src]="product.imageUrl" alt="Imagen del producto" class="img-thumbnail" width="50">
+          </td>
+          <td class="text-center align-middle">{{ product.name }}</td>
+          <td class="text-center align-middle">{{ product.description.length > 30 ? product.description.substring(0, 30) + '...' : product.description }}</td>
+          <td class="text-center align-middle">${{ product.price.toFixed(2) }}</td>
+          <td class="text-center align-middle">
+            <span [class.text-danger]="product.stock < 10" [class.text-success]="product.stock >= 10">
+              {{ product.stock }}
+            </span>
+          </td>
+          <td class="text-center align-middle">
+            <div class="btn-group" role="group">
+              <button class="btn btn-primary btn-sm mr-1" (click)="editProduct(product.id)">
+                Editar
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="deleteProduct(product.id)">
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div *ngIf="products.length === 0" class="alert alert-info text-center">
+    No hay productos disponibles
+  </div>
+  
+  <!-- Paginación -->
+  <div *ngIf="totalPages > 1" class="d-flex justify-content-center mt-3">
+    <nav aria-label="Navegación de páginas de productos">
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" href="javascript:void(0)" (click)="previousPage()">Anterior</a>
+        </li>
+        <li class="page-item active">
+          <span class="page-link">
+            Página {{ currentPage }} de {{ totalPages }}
+          </span>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" href="javascript:void(0)" (click)="nextPage()">Siguiente</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
