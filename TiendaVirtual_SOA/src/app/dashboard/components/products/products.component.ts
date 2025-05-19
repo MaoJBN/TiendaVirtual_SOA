@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ProductsService } from '../../../services/products.service';
 
 interface Product {
-  id: number;
+  id?: string;      
   name: string;
   description: string;
   price: number;
@@ -13,157 +14,13 @@ interface Product {
 
 @Component({
   selector: 'app-products',
-  imports: [CommonModule,FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
-export class ProductsComponent {
-   allProducts: Product[] = [
-    {
-      id: 1,
-      name: 'Smartphone XYZ',
-      description: 'Smartphone de última generación con cámara de alta resolución',
-      price: 599.99,
-      stock: 25,
-      imageUrl: '/logo.svg'
-    },
-    {
-      id: 2,
-      name: 'Laptop Pro',
-      description: 'Laptop profesional para diseñadores gráficos',
-      price: 1299.99,
-      stock: 8,
-      imageUrl: '/logo.svg'
-    },
-    {
-      id: 3,
-      name: 'Auriculares Bluetooth',
-      description: 'Auriculares inalámbricos con cancelación de ruido',
-      price: 89.99,
-      stock: 42,
-      imageUrl: '/logo.svg'
-    },
-    {
-      id: 4,
-      name: 'Smartwatch Sport',
-      description: 'Reloj inteligente con monitor cardíaco',
-      price: 129.99,
-      stock: 15,
-      imageUrl: '/logo.svg'
-    },
-    {
-      id: 5,
-      name: 'Tablet Ultra',
-      description: 'Tablet ligera con pantalla HD',
-      price: 349.99,
-      stock: 12,
-      imageUrl: '/logo.svg'
-    },
-    {
-      id: 6,
-      name: 'Monitor 4K',
-      description: 'Monitor de alta resolución para gaming',
-      price: 429.99,
-      stock: 7,
-      imageUrl: '/logo.svg'
-    },
-    {
-      id: 7,
-      name: 'Teclado Mecánico',
-      description: 'Teclado para gaming con retroiluminación',
-      price: 119.99,
-      stock: 22,
-      imageUrl: '/logo.svg'
-    },
-    {
-      id: 8,
-      name: 'Mouse Inalámbrico',
-      description: 'Mouse ergonómico de precisión',
-      price: 59.99,
-      stock: 30,
-      imageUrl: '/Banner.png'
-    },
-    {
-      id: 9,
-      name: 'Cámara DSLR',
-      description: 'Cámara profesional con lente intercambiable',
-      price: 899.99,
-      stock: 5,
-      imageUrl: '/Banner.png'
-    },
-    {
-      id: 10,
-      name: 'Altavoz Bluetooth',
-      description: 'Altavoz portátil resistente al agua',
-      price: 79.99,
-      stock: 18,
-      imageUrl: '/Banner.png'
-    },
-    {
-      id: 11,
-      name: 'Disco Duro SSD',
-      description: 'Almacenamiento rápido de 1TB',
-      price: 149.99,
-      stock: 20,
-      imageUrl: 'assets/images/ssd.jpg'
-    },
-    {
-      id: 12,
-      name: 'Impresora Láser',
-      description: 'Impresora de alta velocidad',
-      price: 249.99,
-      stock: 9,
-      imageUrl: 'assets/images/printer.jpg'
-    },
-    {
-      id: 13,
-      name: 'Router WiFi',
-      description: 'Router de alta velocidad y largo alcance',
-      price: 89.99,
-      stock: 15,
-      imageUrl: 'assets/images/router.jpg'
-    },
-    {
-      id: 14,
-      name: 'Batería Externa',
-      description: 'Cargador portátil de 20000mAh',
-      price: 49.99,
-      stock: 28,
-      imageUrl: 'assets/images/powerbank.jpg'
-    },
-    {
-      id: 15,
-      name: 'Webcam HD',
-      description: 'Cámara web con micrófono integrado',
-      price: 69.99,
-      stock: 14,
-      imageUrl: 'assets/images/webcam.jpg'
-    },
-    {
-      id: 16,
-      name: 'Adaptador USB-C',
-      description: 'Adaptador multipuerto para dispositivos modernos',
-      price: 39.99,
-      stock: 33,
-      imageUrl: 'assets/images/adapter.jpg'
-    },
-    {
-      id: 17,
-      name: 'Ventilador USB',
-      description: 'Ventilador silencioso para escritorio',
-      price: 19.99,
-      stock: 40,
-      imageUrl: 'assets/images/fan.jpg'
-    },
-    {
-      id: 18,
-      name: 'Luz LED RGB',
-      description: 'Tira de luces programables',
-      price: 29.99,
-      stock: 22,
-      imageUrl: 'assets/images/led.jpg'
-    }
-  ];
+export class ProductsComponent implements OnInit {
+  allProducts: Product[] = [];
 
   // Variables para la paginación
   products: Product[] = [];
@@ -171,13 +28,18 @@ export class ProductsComponent {
   currentPage: number = 1;
   totalPages: number = 1;
 
-  constructor() { }
+  constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.totalPages = Math.ceil(this.allProducts.length / this.pageSize);
-    this.loadProductsPage(1);
+    
+    this.productsService.getAll().subscribe((data) => {
+      this.allProducts = data;
+      this.totalPages = Math.ceil(this.allProducts.length / this.pageSize);
+      this.loadProductsPage(1);
+    });
   }
 
+  //Paginación
   loadProductsPage(page: number): void {
     const startIndex = (page - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -197,29 +59,71 @@ export class ProductsComponent {
     }
   }
 
-  editProduct(id: number): void {
-    // Aquí iría la lógica para editar el producto
-    console.log('Editar producto con ID:', id);
+  // para editar 
+  editProduct(id: string | undefined): void {
+    if (!id) return;
+
+    const product = this.allProducts.find(p => p.id === id);
+    if (!product) return;
+
+    const name = prompt('Nuevo nombre del producto:', product.name) || product.name;
+    const description = prompt('Nueva descripción:', product.description) || product.description;
+    const priceStr = prompt('Nuevo precio:', product.price.toString());
+    const stockStr = prompt('Nuevo stock:', product.stock.toString());
+    const imageUrl = prompt('Nueva URL de imagen:', product.imageUrl) || product.imageUrl;
+
+    const price = parseFloat(priceStr || product.price.toString());
+    const stock = parseInt(stockStr || product.stock.toString(), 10);
+
+    const updatedProduct = {
+      name,
+      description,
+      price,
+      stock,
+      imageUrl
+    };
+
+    this.productsService.update(id, updatedProduct)
+      .then(() => {
+        console.log('Producto actualizado');
+        // Actualizar la lista para reflejar los cambios
+        const index = this.allProducts.findIndex(p => p.id === id);
+        if (index !== -1) {
+          this.allProducts[index] = { id, ...updatedProduct };
+          this.loadProductsPage(this.currentPage); 
+        }
+      })
+    .catch(err => console.error('Error al actualizar:', err));
   }
 
-  deleteProduct(id: number): void {
-    // Aquí iría la lógica para eliminar el producto
-    console.log('Eliminar producto con ID:', id);
+
+  //  para eliminar 
+  deleteProduct(id: string | undefined): void {
+    if (!id) return;
     if (confirm('¿Está seguro que desea eliminar este producto?')) {
-      this.allProducts = this.allProducts.filter(product => product.id !== id);
-      this.totalPages = Math.ceil(this.allProducts.length / this.pageSize);
-      
-      // Si se eliminó el último elemento de la página actual y no es la primera página
-      if (this.products.length === 1 && this.currentPage > 1) {
-        this.currentPage--;
-      }
-      
-      this.loadProductsPage(this.currentPage);
+      this.productsService.delete(id)
+        .then(() => console.log('Producto eliminado'))
+        .catch(err => console.error('Error al eliminar:', err));
     }
   }
 
+  // para crear 
   addProduct(): void {
-    // Aquí iría la lógica para agregar un nuevo producto
-    console.log('Agregar nuevo producto');
+    const name = prompt('Nombre del producto:');
+    if (!name) { return; }
+    const description = prompt('Descripción:') || '';
+    const price = parseFloat(prompt('Precio:') || '0');
+    const stock = parseInt(prompt('Stock:') || '0', 10);
+    const imageUrl = prompt('URL de la imagen:') || '';
+
+    this.productsService.create({
+      name,
+      description,
+      price,
+      stock,
+      imageUrl
+    })
+    .then(() => console.log('Producto creado exitosamente'))
+    .catch(err => console.error('Error al crear producto:', err));
   }
 }
