@@ -41,9 +41,11 @@ export class ProductsService {
   }
 
   // Crear
-  create(product: Product): Promise<void> {
-    return addDoc(this.coll, product).then(() => {});
+  create(product: any): Promise<any> {
+    const productsRef = collection(this.firestore, 'products');
+    return addDoc(productsRef, product);
   }
+
 
   // Actualizar
   update(id: string, data: Partial<Product>): Promise<void> {

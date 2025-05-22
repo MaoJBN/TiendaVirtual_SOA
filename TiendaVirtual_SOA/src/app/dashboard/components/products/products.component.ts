@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductsService } from '../../../services/products.service';
+import { Router } from '@angular/router';
 
 interface Product {
   id?: string;      
@@ -22,16 +23,17 @@ interface Product {
 export class ProductsComponent implements OnInit {
   allProducts: Product[] = [];
 
-  // Variables para la paginación
   products: Product[] = [];
   pageSize: number = 10;
   currentPage: number = 1;
   totalPages: number = 1;
 
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    private router: Router  
+  ) {}
 
   ngOnInit(): void {
-    
     this.productsService.getAll().subscribe((data) => {
       this.allProducts = data;
       this.totalPages = Math.ceil(this.allProducts.length / this.pageSize);
@@ -39,7 +41,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  //Paginación
+  // Paginación
   loadProductsPage(page: number): void {
     const startIndex = (page - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -59,7 +61,7 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  // para editar 
+  
   editProduct(id: string | undefined): void {
     if (!id) return;
 
@@ -86,44 +88,38 @@ export class ProductsComponent implements OnInit {
     this.productsService.update(id, updatedProduct)
       .then(() => {
         console.log('Producto actualizado');
-        // Actualizar la lista para reflejar los cambios
+        
         const index = this.allProducts.findIndex(p => p.id === id);
         if (index !== -1) {
           this.allProducts[index] = { id, ...updatedProduct };
           this.loadProductsPage(this.currentPage); 
         }
       })
-    .catch(err => console.error('Error al actualizar:', err));
+      .catch(err => console.error('Error al actualizar:', err));
   }
 
 
-  //  para eliminar 
   deleteProduct(id: string | undefined): void {
     if (!id) return;
     if (confirm('¿Está seguro que desea eliminar este producto?')) {
       this.productsService.delete(id)
-        .then(() => console.log('Producto eliminado'))
+        .then(() => {
+          console.log('Producto eliminado');
+          
+          this.allProducts = this.allProducts.filter(p => p.id !== id);
+          this.totalPages = Math.ceil(this.allProducts.length / this.pageSize);
+          
+          if (this.currentPage > this.totalPages) {
+            this.currentPage = this.totalPages;
+          }
+          this.loadProductsPage(this.currentPage);
+        })
         .catch(err => console.error('Error al eliminar:', err));
     }
   }
 
-  // para crear 
+  
   addProduct(): void {
-    const name = prompt('Nombre del producto:');
-    if (!name) { return; }
-    const description = prompt('Descripción:') || '';
-    const price = parseFloat(prompt('Precio:') || '0');
-    const stock = parseInt(prompt('Stock:') || '0', 10);
-    const imageUrl = prompt('URL de la imagen:') || '';
-
-    this.productsService.create({
-      name,
-      description,
-      price,
-      stock,
-      imageUrl
-    })
-    .then(() => console.log('Producto creado exitosamente'))
-    .catch(err => console.error('Error al crear producto:', err));
+    this.router.navigate(['/dashboard/productos/create']);
   }
 }
