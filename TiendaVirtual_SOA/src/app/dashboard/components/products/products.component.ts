@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductsService } from '../../../services/products.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 
 interface Product {
   id?: string;      
@@ -69,21 +71,19 @@ export class ProductsComponent implements OnInit {
 
   deleteProduct(id: string | undefined): void {
     if (!id) return;
-    if (confirm('¿Está seguro que desea eliminar este producto?')) {
-      this.productsService.delete(id)
-        .then(() => {
-          console.log('Producto eliminado');
-          
-          this.allProducts = this.allProducts.filter(p => p.id !== id);
-          this.totalPages = Math.ceil(this.allProducts.length / this.pageSize);
-          
-          if (this.currentPage > this.totalPages) {
-            this.currentPage = this.totalPages;
-          }
-          this.loadProductsPage(this.currentPage);
-        })
-        .catch(err => console.error('Error al eliminar:', err));
-    }
+            Swal.fire({
+              title: '¿Estás seguro?',
+              text: '¡No podrás revertir esto!',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Sí, eliminarlo',
+              cancelButtonText: 'Cancelar'
+              }).then((result) => {
+              if (result.isConfirmed) {
+                this.productsService.delete(id)
+                Swal.fire('Eliminado', 'El elemento ha sido eliminado.', 'success');
+              }
+        });
   }
 
   
