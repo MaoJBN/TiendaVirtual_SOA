@@ -63,39 +63,7 @@ export class ProductsComponent implements OnInit {
 
   
   editProduct(id: string | undefined): void {
-    if (!id) return;
-
-    const product = this.allProducts.find(p => p.id === id);
-    if (!product) return;
-
-    const name = prompt('Nuevo nombre del producto:', product.name) || product.name;
-    const description = prompt('Nueva descripción:', product.description) || product.description;
-    const priceStr = prompt('Nuevo precio:', product.price.toString());
-    const stockStr = prompt('Nuevo stock:', product.stock.toString());
-    const imageUrl = prompt('Nueva URL de imagen:', product.imageUrl) || product.imageUrl;
-
-    const price = parseFloat(priceStr || product.price.toString());
-    const stock = parseInt(stockStr || product.stock.toString(), 10);
-
-    const updatedProduct = {
-      name,
-      description,
-      price,
-      stock,
-      imageUrl
-    };
-
-    this.productsService.update(id, updatedProduct)
-      .then(() => {
-        console.log('Producto actualizado');
-        
-        const index = this.allProducts.findIndex(p => p.id === id);
-        if (index !== -1) {
-          this.allProducts[index] = { id, ...updatedProduct };
-          this.loadProductsPage(this.currentPage); 
-        }
-      })
-      .catch(err => console.error('Error al actualizar:', err));
+    this.router.navigate(['/dashboard/productos/edit', id]);
   }
 
 
