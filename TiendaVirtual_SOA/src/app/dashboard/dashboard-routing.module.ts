@@ -4,6 +4,7 @@ import { MainDashboardComponent } from './components/main-dashboard/main-dashboa
 import { UsersComponent } from './components/users/users.component';
 import { ProductsComponent } from './components/products/products.component';
 import { CreateProductComponent } from './components/products/create-product/create-product.component';
+import { EditProductComponent } from './components/products/edit-product/edit-product.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
       { path: 'usuarios', component: UsersComponent },
       { path: 'productos', component: ProductsComponent },
       { path: 'productos/create', component: CreateProductComponent }, 
+      { path: 'productos/edit/:id', component: EditProductComponent },
       { path: '', redirectTo: 'productos', pathMatch: 'full' } 
     ]
   }
