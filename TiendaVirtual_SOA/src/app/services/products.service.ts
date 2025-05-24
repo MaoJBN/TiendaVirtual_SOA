@@ -58,4 +58,9 @@ export class ProductsService {
     const ref = doc(this.firestore, `products/${id}`);
     return deleteDoc(ref);
   }
+
+  getProducts(): Observable<Product[]> {
+    const productsCollection = collection(this.firestore, 'products');
+    return collectionData(productsCollection, { idField: 'id' }) as Observable<Product[]>;
+  }
 }
