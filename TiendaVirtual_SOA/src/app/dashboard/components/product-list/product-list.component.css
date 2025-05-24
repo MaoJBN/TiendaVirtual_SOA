@@ -1,0 +1,48 @@
+
+.image-container {
+  position: relative;
+  height: 250px; 
+  overflow: hidden;
+  background-color: #ffffff; 
+}
+
+
+.img-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 15px; 
+}
+
+
+.product-image {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain; 
+  transition: transform 0.3s ease;
+}
+
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product-card:hover .image-overlay {
+  opacity: 1;
+}
