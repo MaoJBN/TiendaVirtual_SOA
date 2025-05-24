@@ -28,10 +28,9 @@
             </div>
 
             <button type="submit" class="register-btn" [disabled]="registerForm.invalid">Registrarse</button>
-            <button type="button" class="register-btn mt-3" (click)="loginWithGoogle()">
-                <img src="/google.svg" alt="Google Icon" class="google-img">
-                Registrarse con Google
-            </button>
+            <app-login-with-google></app-login-with-google>
+            <app-login-with-git></app-login-with-git>
+            <app-login-with-facebook></app-login-with-facebook>
         </form>
         <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></p>
     </div>

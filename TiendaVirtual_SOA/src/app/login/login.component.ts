@@ -4,11 +4,14 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { LoginWithGitComponent } from "../login-with-git/login-with-git.component";
+import { LoginWithGoogleComponent } from "../login-with-google/login-with-google.component";
+import { LoginWithFacebookComponent } from '../login-with-facebook/login-with-facebook.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NavbarComponent, ReactiveFormsModule, CommonModule],
+  imports: [NavbarComponent, ReactiveFormsModule, CommonModule, LoginWithGitComponent, LoginWithGoogleComponent, LoginWithFacebookComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -34,16 +37,16 @@ export class LoginComponent {
     }
   }
 
-  loginWithGoogle() {
-    this.authService.loginWithGoogle().subscribe({
-      next: (userCredential) => {
-        console.log('Inicio de sesión con Google exitoso', userCredential);
-      },
-      error: (err: any) => {
-        console.error('Error con Google', err);
-      }
-    });
-  }
+  // loginWithGoogle() {
+  //   this.authService.loginWithGoogle().subscribe({
+  //     next: (userCredential) => {
+  //       console.log('Inicio de sesión con Google exitoso', userCredential);
+  //     },
+  //     error: (err: any) => {
+  //       console.error('Error con Google', err);
+  //     }
+  //   });
+  // }
 
   logout() {
     this.authService.logout().subscribe({

@@ -1,0 +1,33 @@
+<header class="header">
+  <div class="header-left">
+    <button class="menu-toggle">
+      <img src="/search-alt.png" alt="">
+    </button>
+    <div class="search-box">
+      <input type="text" placeholder="Buscar...">
+      <i class="fas fa-search"></i>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="user-profile">
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle">
+          <img src="assets/images/user-avatar.jpg" alt="User Avatar">
+          <span>Admin</span>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-user"></i> Perfil
+          </a>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-cog"></i> Configuración
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item" routerLink="/register" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,77 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+          <h4 class="mb-0">Editar Producto</h4>
+        </div>
+        <div class="card-body d-flex flex-column align-items-center">
+          <form (ngSubmit)="updateProduct()" #productForm="ngForm" class="w-75">
+            <div class="form-group mb-3 w-100">
+              <label for="name">Nombre:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-control"
+                [(ngModel)]="product.name"
+                required />
+            </div>
+
+            <div class="form-group mb-3 w-100">
+              <label for="description">Descripción:</label>
+              <input
+                type="text"
+                id="description"
+                name="description"
+                class="form-control"
+                [(ngModel)]="product.description"
+                required />
+            </div>
+
+            <div class="form-group mb-3 w-100">
+              <label for="price">Precio:</label>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                class="form-control"
+                [(ngModel)]="product.price"
+                required />
+            </div>
+
+            <div class="form-group mb-3 w-100">
+              <label for="stock">Stock:</label>
+              <input
+                type="number"
+                id="stock"
+                name="stock"
+                class="form-control"
+                [(ngModel)]="product.stock"
+                required />
+            </div>
+
+            <div class="form-group mb-4 w-100">
+              <label for="imageUrl">URL de Imagen:</label>
+              <input
+                type="text"
+                id="imageUrl"
+                name="imageUrl"
+                class="form-control"
+                [(ngModel)]="product.imageUrl" />
+            </div>
+
+            <div class="text-center w-100">
+              <button
+                type="submit"
+                class="btn btn-success px-4"
+                [disabled]="productForm.invalid">
+                Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

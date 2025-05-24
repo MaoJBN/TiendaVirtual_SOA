@@ -1,1 +1,43 @@
 <app-navbar></app-navbar>
+<div class="w-100">
+  <img src="/Banner.png" alt="Banner" class="img-fluid w-100" style="max-height: 700px; object-fit: cover;">
+</div>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12 text-center">
+      <h1>Bienvenido a SporTools</h1>
+      <p>La mejor herramienta para tus deportes favoritos</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <h2>¿Qué es SporTools?</h2>
+      <p>SporTools es una plataforma que te permite llevar el control de tus deportes favoritos, desde estadísticas hasta análisis de rendimiento.</p>
+    </div>
+    <div class="col-12 col-md-6">
+      <h2>¿Cómo funciona?</h2>
+      <p>Simplemente crea una cuenta, selecciona tus deportes favoritos y comienza a disfrutar de todas las herramientas que SporTools tiene para ofrecerte.</p>
+    </div>
+  </div>
+</div>
+
+<div>
+  <h2 class="text-center mt-5">Nuestros Productos</h2>
+  <!-- <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-4 mb-4" *ngFor="let product of products">
+        <div class="card h-100 shadow text-center">
+          <img [src]="product.imageUrl" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text text-success fw-bold">\${{ product.price }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div>
+    <app-product-list></app-product-list>
+  </div>
+</div>
+
