@@ -30,7 +30,7 @@ constructor(private auth: Auth, private router: Router) {
 
 
   // Registro de usuario
-  register(email: string, password: string): Observable<any> {
+  register(email: string, password: string, firstName: string, lastName: string): Observable<any> {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       catchError(error => {
         console.error('Error en el registro:', error);
