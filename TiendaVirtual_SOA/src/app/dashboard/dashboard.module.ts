@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { RouterOutlet } from '@angular/router';
+import { UsersComponent } from './components/users/users.component';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { RouterOutlet } from '@angular/router';
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    RouterOutlet
+    RouterOutlet,
+    UsersComponent 
   ]
 })
 export class DashboardModule { }
