@@ -1,5 +1,13 @@
 <div style="padding: 2rem;">
   <h2>👤 Lista de Usuarios</h2>
-  <p>Aquí aparecerá la información de los usuarios.</p>
-</div>
 
+  <ul *ngIf="usuarios.length > 0; else sinUsuarios">
+    <li *ngFor="let user of usuarios">
+      {{ user.firstName }} {{ user.lastName }} - {{ user.email }}
+    </li>
+  </ul>
+
+  <ng-template #sinUsuarios>
+    <p>No hay usuarios registrados en Firestore.</p>
+  </ng-template>
+</div>
