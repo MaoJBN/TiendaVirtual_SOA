@@ -1,0 +1,73 @@
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+th {
+  background-color: #343a40;
+  color: white;
+  vertical-align: middle;
+}
+
+.btn-group .btn {
+  margin-right: 5px;
+}
+
+.btn-group .btn:last-child {
+  margin-right: 0;
+}
+
+.img-thumbnail {
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Añadir fondo alternado para las filas */
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+  background-color: #fff;
+}
+
+/* Estilos para la paginación */
+.pagination .page-link {
+  color: #007bff;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+
+.pagination .page-link:hover {
+  color: #0056b3;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+/* Ajuste vertical para todas las celdas */
+td, th {
+  vertical-align: middle !important;
+}

@@ -43,7 +43,7 @@ export class AuthService {
           email,
           createdAt: new Date()
         };
-        return from(this.usersService.create(uid, userData));
+        return from(this.usersService.addLogin(uid, userData));
       }),
       catchError(error => {
         console.error('Error en el registro:', error);
@@ -66,13 +66,12 @@ export class AuthService {
 
   // Iniciar sesión con Google
   loginWithGoogle(): Observable<UserCredential> {
-    const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider(); // Acá definís el provider
     return from(signInWithPopup(this.auth, provider)).pipe(
-      switchMap((credential: UserCredential) => {
+      switchMap(async (credential: UserCredential) => {
         const user = credential.user;
         const uid = user.uid;
 
-        // Construir datos del usuario
         const userData: Usuario = {
           firstName: user.displayName?.split(' ')[0] || '',
           lastName: user.displayName?.split(' ')[1] || '',
@@ -80,11 +79,13 @@ export class AuthService {
           createdAt: new Date()
         };
 
-        // Crear documento en Firestore
-        return from(this.usersService.create(uid, userData)).pipe(
-          // Si quieres devolver el UserCredential original
-          switchMap(() => from([credential]))
-        );
+        // Crear el documento si no existe (merge para no pisar datos)
+        await this.usersService.create(uid, userData);
+
+        // Registrar logeo (no sobrescribe)
+        await this.usersService.addLogin(uid, userData);
+
+        return credential;
       }),
       catchError(error => {
         console.error('Error en login con Google:', error);
@@ -98,26 +99,30 @@ export class AuthService {
   loginWithGitHub(): Observable<UserCredential> {
     const provider = new GithubAuthProvider();
     return from(signInWithPopup(this.auth, provider)).pipe(
-      switchMap((credential: UserCredential) => {
-        const user = credential.user;
-        const uid = user.uid;
+    switchMap(async (credential: UserCredential) => {
+      const user = credential.user;
+      const uid = user.uid;
 
-        const userData: Usuario = {
-          firstName: user.displayName?.split(' ')[0] || '',
-          lastName: user.displayName?.split(' ')[1] || '',
-          email: user.email || '',
-          createdAt: new Date()
-        };
+      const userData: Usuario = {
+        firstName: user.displayName?.split(' ')[0] || '',
+        lastName: user.displayName?.split(' ')[1] || '',
+        email: user.email || '',
+        createdAt: new Date()
+      };
 
-        return from(this.usersService.create(uid, userData)).pipe(
-          switchMap(() => from([credential]))
-        );
-      }),
-      catchError(error => {
-        console.error('Error en login con GitHub:', error);
-        throw error;
-      })
-    );
+      // 🔥 Guardar/actualizar usuario sin sobrescribirlo
+      await this.usersService.create(uid, userData);
+
+      // 🔥 Agregar logeo a la subcolección
+      await this.usersService.addLogin(uid, userData);
+
+      return credential;
+    }),
+    catchError(error => {
+      console.error('Error en login con Google:', error);
+      throw error;
+    })
+  );
   }
 
 
@@ -125,26 +130,30 @@ export class AuthService {
   loginWithFacebook(): Observable<UserCredential> {
     const provider = new FacebookAuthProvider();
     return from(signInWithPopup(this.auth, provider)).pipe(
-      switchMap((credential: UserCredential) => {
-        const user = credential.user;
-        const uid = user.uid;
+    switchMap(async (credential: UserCredential) => {
+      const user = credential.user;
+      const uid = user.uid;
 
-        const userData: Usuario = {
-          firstName: user.displayName?.split(' ')[0] || '',
-          lastName: user.displayName?.split(' ')[1] || '',
-          email: user.email || '',
-          createdAt: new Date()
-        };
+      const userData: Usuario = {
+        firstName: user.displayName?.split(' ')[0] || '',
+        lastName: user.displayName?.split(' ')[1] || '',
+        email: user.email || '',
+        createdAt: new Date()
+      };
 
-        return from(this.usersService.create(uid, userData)).pipe(
-          switchMap(() => from([credential]))
-        );
-      }),
-      catchError(error => {
-        console.error('Error en login con Facebook:', error);
-        throw error;
-      })
-    );
+      // 🔥 Guardar/actualizar usuario sin sobrescribirlo
+      await this.usersService.create(uid, userData);
+
+      // 🔥 Agregar logeo a la subcolección
+      await this.usersService.addLogin(uid, userData);
+
+      return credential;
+    }),
+    catchError(error => {
+      console.error('Error en login con Google:', error);
+      throw error;
+    })
+  );
   }
 
 
