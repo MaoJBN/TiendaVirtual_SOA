@@ -24,6 +24,7 @@ export class UsersComponent implements OnInit {
     lastName: string;
     email: string;
     createdAt: Date | null;
+    filtroHora: string;
   }[] = [];
 
   // ✨ NUEVAS PROPIEDADES PARA LOADING
@@ -39,6 +40,7 @@ export class UsersComponent implements OnInit {
     lastName: string;
     email: string;
     createdAt: Date | null;
+    filtroHora: string;
   }[] = [];
   loginPageSize: number = 10;
   currentLoginPage: number = 1;
@@ -50,11 +52,14 @@ export class UsersComponent implements OnInit {
     lastName: string;
     email: string;
     createdAt: Date | null;
+    filtroHora: string;
+
   }[] = [];
   filtroNombre: string = '';
   filtroEmail: string = '';
   filtroFechaDesde: string = '';
   filtroFechaHasta: string = '';
+  filtroHora: string = '';
 
   constructor(
     private usersService: UsersService,
@@ -191,7 +196,8 @@ export class UsersComponent implements OnInit {
         firstName: login.firstName,
         lastName: login.lastName,
         email: login.email,
-        createdAt: login.loginTime
+        createdAt: login.loginTime,
+        filtroHora: login.loginTime
       }));
       
       this.aplicarFiltros(); // ✨ APLICAR FILTROS DESPUÉS DE CARGAR
@@ -259,6 +265,42 @@ export class UsersComponent implements OnInit {
         return fechaLogin <= fechaHasta;
       });
     }
+
+    // NUEVO filtro por hora
+    if (this.filtroHora) {
+      const [hora, minuto] = this.filtroHora.split(':').map(Number);
+
+      loginsFiltrados = loginsFiltrados.filter(login => {
+        if (!login.createdAt) return false;
+
+        let fecha: Date | null = null;
+
+        // Caso 1: Es un objeto Date de JavaScript
+        if (login.createdAt instanceof Date) {
+          fecha = login.createdAt;
+        }
+        // Caso 2: Es un Timestamp de Firestore (tiene método toDate)
+        else if (login.createdAt && typeof (login.createdAt as any).toDate === 'function') {
+          fecha = (login.createdAt as any).toDate();
+        }
+        // Caso 3: Es un string (ISO o similar)
+        else if (typeof login.createdAt === 'string') {
+          fecha = new Date(login.createdAt);
+        }
+        // Caso 4: Es un timestamp numérico (milisegundos desde 1970)
+        else if (typeof login.createdAt === 'number') {
+          fecha = new Date(login.createdAt);
+        }
+
+        // Si no se pudo convertir a Date, descartar
+        if (!fecha || isNaN(fecha.getTime())) return false;
+
+        // Comparar hora y minuto
+        return fecha.getHours() === hora && fecha.getMinutes() === minuto;
+      });
+    }
+
+
 
     this.filteredLogins = loginsFiltrados;
     this.currentLoginPage = 1; // Reset a la primera página

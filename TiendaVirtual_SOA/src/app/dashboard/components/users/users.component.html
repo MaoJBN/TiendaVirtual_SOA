@@ -107,6 +107,20 @@
                 [(ngModel)]="filtroFechaHasta"
                 (change)="aplicarFiltros()">
             </div>
+
+            <!-- Nuevo filtro por hora -->
+            <div class="col-md-6 col-lg-2">
+              <label for="filtroHora" class="form-label">
+                <i class="fas fa-clock"></i> Hora específica
+              </label>
+            <input 
+              type="time" 
+              class="form-control" 
+              id="filtroHora"
+              [(ngModel)]="filtroHora"
+              (change)="aplicarFiltros()"
+              placeholder="HH:MM">
+            </div>
             
             <!-- Botón limpiar filtros -->
             <div class="col-md-12 col-lg-2">
@@ -123,6 +137,8 @@
         </div>
       </div>
     </div>
+
+    
 
     <!-- Contador de resultados -->
     <div class="results-info mb-3">
