@@ -30,13 +30,12 @@ export class UsersService {
     this.coll = collection(this.firestore, 'usuarios') as CollectionReference<Usuario>;
   }
 
-  // ✅ Crear usuario (con merge para evitar sobreescrituras)
+  // Métodos existentes sin cambios...
   create(id: string, data: Usuario): Promise<void> {
     const ref = doc(this.firestore, `usuarios/${id}`);
     return setDoc(ref, data, { merge: true });
   }
 
-  // ✅ Agregar un logeo individual
   addLogin(uid: string, userData: Usuario): Promise<void> {
     const loginRef = collection(this.firestore, `usuarios/${uid}/logins`);
     console.log('Ruta del login:', `usuarios/${uid}/logins`);
@@ -45,24 +44,23 @@ export class UsersService {
       .catch(err => console.error('Error al agregar login:', err));
   }
 
-  // ✅ Obtener todos los usuarios
-  getAll(): Observable<Usuario[]> {
+  // ✅ Obtener todos los usuarios (con opción para evitar caché)
+  getAll(forceRefresh = false): Observable<Usuario[]> {
+    // Si necesitas forzar refresco, puedes agregar un timestamp
+    const timestamp = forceRefresh ? Date.now() : '';
     return collectionData(this.coll, { idField: 'id' }) as Observable<Usuario[]>;
   }
 
-  // ✅ Obtener usuario por UID
   getById(id: string): Observable<Usuario> {
     const ref = doc(this.firestore, `usuarios/${id}`);
     return docData(ref, { idField: 'id' }) as Observable<Usuario>;
   }
 
-  // ✅ Actualizar usuario
   update(id: string, data: Partial<Usuario>): Promise<void> {
     const ref = doc(this.firestore, `usuarios/${id}`);
     return updateDoc(ref, data);
   }
 
-  // ✅ Eliminar usuario
   delete(id: string): Promise<void> {
     const ref = doc(this.firestore, `usuarios/${id}`);
     return deleteDoc(ref);
@@ -72,14 +70,23 @@ export class UsersService {
     return collection(this.firestore, `usuarios/${userId}/logins`);
   }
 
-  // ✅ Obtener TODOS los logins de TODOS los usuarios con sus datos
-  async getAllLoginsConUsuario(): Promise<any[]> {
+  // ✨ MÉTODO ACTUALIZADO CON CALLBACK DE PROGRESO
+  async getAllLoginsConUsuario(
+    onProgress?: (current: number, total: number, userInfo?: string) => void
+  ): Promise<any[]> {
     const result: any[] = [];
     const usuariosSnap = await getDocs(this.coll);
+    const totalUsers = usuariosSnap.docs.length;
 
-    for (const userDoc of usuariosSnap.docs) {
+    for (let i = 0; i < usuariosSnap.docs.length; i++) {
+      const userDoc = usuariosSnap.docs[i];
       const userData = userDoc.data();
       const userId = userDoc.id;
+
+      // Reportar progreso con información del usuario
+      if (onProgress) {
+        onProgress(i + 1, totalUsers, `${userData.firstName} ${userData.lastName}`);
+      }
 
       const loginsSnap = await getDocs(
         collection(this.firestore, `usuarios/${userId}/logins`)
