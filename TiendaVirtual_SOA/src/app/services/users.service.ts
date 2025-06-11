@@ -105,28 +105,4 @@ export class UsersService {
   }
 
 
-
-  private obtenerFiltroHoraSeguro(fecha: any): string {
-  if (!fecha) return 'desconocido';
-
-  // Si viene con método toDate (Timestamp de Firestore)
-  if (typeof fecha.toDate === 'function') {
-    fecha = fecha.toDate();
-  }
-
-  // Si ya es un string o Date, intentamos convertirlo
-  const dateObj = new Date(fecha);
-
-  if (isNaN(dateObj.getTime())) {
-    return 'desconocido';
-  }
-
-  const hora = dateObj.getHours();
-
-  if (hora >= 6 && hora < 12) return 'mañana';
-  if (hora >= 12 && hora < 18) return 'tarde';
-  if (hora >= 18 && hora < 24) return 'noche';
-  return 'madrugada';
-}
-
 }
