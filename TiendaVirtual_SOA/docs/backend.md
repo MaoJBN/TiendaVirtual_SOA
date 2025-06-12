@@ -208,3 +208,63 @@ Al registrar un usuario nuevo mediante Firebase Authentication, se almacena tamb
 #### 🖼️ Ejemplo visual
 
 ![Ejemplo de documento en colección usuarios](./Imagenes_Evidencias/Documento_Example.png)
+
+#### Implementacion
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
+import { FormsModule } from '@angular/forms'; // ✨ AGREGADO PARA FILTROS
+import { UsersService, Usuario } from '../../../services/users.service';
+import { Timestamp, collection, getDocs } from 'firebase/firestore';
+import { AuthService } from '../../../services/auth.service';
+import { firstValueFrom } from 'rxjs';
+
+constructor(
+    private usersService: UsersService,
+    private authService: AuthService
+  ) {}
+
+const userData: Usuario = {
+      firstName: 'Test',
+      lastName: 'Manual',
+      email: user.email || '',
+      createdAt: new Date()
+    };
+
+try {
+      // 🔥 USAR EL MÉTODO DEL SERVICIO QUE YA FUNCIONABA
+      const todosLogins = await this.usersService.getAllLoginsConUsuario(
+        (current, total, userInfo) => {
+          this.currentUserProcessing = current;
+          this.totalUsers = total;
+          this.loadingProgress = Math.round((current / total) * 100);
+          this.loadingMessage = `Procesando usuario ${current} de ${total}: ${userInfo || ''}`;
+        }
+      );
+
+      this.todosLogins = todosLogins.map(login => ({
+        firstName: login.firstName,
+        lastName: login.lastName,
+        email: login.email,
+        createdAt: login.loginTime,
+        filtroHora: login.loginTime
+      }));
+      
+      this.aplicarFiltros(); // ✨ APLICAR FILTROS DESPUÉS DE CARGAR
+      this.calculateLoginPagination(); // ✨ CALCULAR PAGINACIÓN
+      this.loadingMessage = `Carga completada: ${this.todosLogins.length} logins encontrados`;
+      console.log("RESULTADO FINAL - Todos los logins:", this.todosLogins.length);
+      
+    } catch (error) {
+      console.error("Error cargando usuarios con logins:", error);
+      this.loadingMessage = 'Error al cargar los datos';
+      this.todosLogins = [];
+      this.paginatedLogins = []; // 🔥 LIMPIAR PAGINACIÓN EN ERROR
+    } finally {
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 800);
+    }
+  }
+```
