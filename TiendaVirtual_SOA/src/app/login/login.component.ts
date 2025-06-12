@@ -29,7 +29,10 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe({
-        next: () => console.log('Inicio de sesión exitoso'),
+        next: () => {
+          console.log('Inicio de sesión exitoso')
+          this.router.navigate(['/home']);
+        },
         error: err => console.error('Error al iniciar sesión', err)
       });
     } else {

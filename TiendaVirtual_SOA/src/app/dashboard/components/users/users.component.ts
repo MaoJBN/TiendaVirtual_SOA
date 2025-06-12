@@ -61,6 +61,10 @@ export class UsersComponent implements OnInit {
   filtroFechaHasta: string = '';
   filtroHora: string = '';
 
+  ordenAscendente: boolean = true;
+  direccionOrden: 'asc' | 'desc' = 'desc'; //
+  ordenarPorFechaAscendente: boolean = false;
+
   constructor(
     private usersService: UsersService,
     private authService: AuthService
@@ -312,6 +316,7 @@ export class UsersComponent implements OnInit {
     this.filtroEmail = '';
     this.filtroFechaDesde = '';
     this.filtroFechaHasta = '';
+    this.filtroHora = '';
     this.aplicarFiltros();
   }
 
@@ -382,4 +387,26 @@ export class UsersComponent implements OnInit {
       this.loadProductsPage(this.currentPage - 1);
     }
   }
+
+
+  /// METODO DE ORDENADO DE LOGINS
+
+  ordenarPorFecha(): void {
+    this.ordenarPorFechaAscendente = !this.ordenarPorFechaAscendente;
+
+    this.filteredLogins.sort((a, b) => {
+      const fechaA = a.createdAt?.getTime?.() ?? 0;
+      const fechaB = b.createdAt?.getTime?.() ?? 0;
+
+      return this.ordenarPorFechaAscendente ? fechaA - fechaB : fechaB - fechaA;
+    });
+
+    this.paginatedLogins = this.filteredLogins.slice(
+      (this.currentLoginPage - 1) * this.loginPageSize,
+      this.currentLoginPage * this.loginPageSize
+    );
+    this.ordenAscendente = !this.ordenAscendente;
+  }
+
 }
+

@@ -43,6 +43,11 @@ export class UsersService {
       .then(() => console.log('Login agregado en', `usuarios/${uid}/logins`))
       .catch(err => console.error('Error al agregar login:', err));
   }
+  addUser(uid: string, loginData: any): Promise<void> {
+    const loginRef = collection(this.firestore, `usuarios/${uid}/logins`);
+    const newLoginDoc = doc(loginRef); // crea ID aleatorio
+    return setDoc(newLoginDoc, loginData);
+  }
 
   // ✅ Obtener todos los usuarios (con opción para evitar caché)
   getAll(forceRefresh = false): Observable<Usuario[]> {

@@ -33,13 +33,21 @@
     <!-- Header con botón de recarga -->
     <div class="header-section mb-3">
       <h2>Logins de Usuarios</h2>
-      <button 
-        class="btn btn-primary btn-reload"
-        (click)="recargarLogins()"
-        [disabled]="isLoading">
-        <span class="reload-icon">🔄</span>
-        Recargar logins
-      </button>
+      <div class="button-group">
+        <button 
+          class="btn btn-primary btn-reload"
+          (click)="recargarLogins()"
+          [disabled]="isLoading">
+          <span class="reload-icon">🔄</span>
+          Recargar logins
+        </button>
+        <button 
+          class="btn btn-primary btn-reload"
+          (click)="ordenarPorFecha()"
+          [disabled]="isLoading">
+          🕒 Ordenar por hora {{ ordenAscendente ? '↑' : '↓' }}
+        </button>
+      </div>
     </div>
 
     <!-- ✨ SECCIÓN DE FILTROS -->
