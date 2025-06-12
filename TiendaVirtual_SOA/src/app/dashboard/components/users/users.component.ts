@@ -247,28 +247,33 @@ export class UsersComponent implements OnInit {
       );
     }
 
-    // Filtro por fecha desde
+    const getFechaLocalYMD = (fecha: string | Date): string => {
+      const date = new Date(fecha);
+      const año = date.getFullYear();
+      const mes = String(date.getMonth() + 1).padStart(2, '0');
+      const dia = String(date.getDate()).padStart(2, '0');
+      return `${año}-${mes}-${dia}`;
+    };
+
+    // Filtros por fecha
     if (this.filtroFechaDesde) {
-      const fechaDesde = new Date(this.filtroFechaDesde);
-      fechaDesde.setHours(0, 0, 0, 0);
+      const fechaDesde = this.filtroFechaDesde;
       loginsFiltrados = loginsFiltrados.filter(login => {
         if (!login.createdAt) return false;
-        const fechaLogin = new Date(login.createdAt);
-        fechaLogin.setHours(0, 0, 0, 0);
+        const fechaLogin = getFechaLocalYMD(login.createdAt);
         return fechaLogin >= fechaDesde;
       });
     }
 
-    // Filtro por fecha hasta
     if (this.filtroFechaHasta) {
-      const fechaHasta = new Date(this.filtroFechaHasta);
-      fechaHasta.setHours(23, 59, 59, 999);
+      const fechaHasta = this.filtroFechaHasta;
       loginsFiltrados = loginsFiltrados.filter(login => {
         if (!login.createdAt) return false;
-        const fechaLogin = new Date(login.createdAt);
+        const fechaLogin = getFechaLocalYMD(login.createdAt);
         return fechaLogin <= fechaHasta;
       });
     }
+
 
     // NUEVO filtro por hora
     if (this.filtroHora) {
