@@ -7,6 +7,8 @@ Este proyecto utiliza Firebase Authentication para la gestión de usuarios.
 
 #### Tecnologías implementadas:
 - Firebase Authentication: Servicio de autenticación basado en Firebase.
+- Firebase Firestore: Base de datos NoSQL en tiempo real para almacenamiento estructurado de datos.
+- Cloud Firestore: Base de datos NoSQL en tiempo real de Firebase para almacenar y sincronizar datos.
 - AngularFire: Librería que facilita la integración de Firebase en Angular.
 - TypeScript: Lenguaje de programación basado en JavaScript que añade tipado estático.
 
@@ -14,6 +16,8 @@ Este proyecto utiliza Firebase Authentication para la gestión de usuarios.
 Este proyecto incluye las siguientes características:
 - Registro de usuarios
 - Autenticación de usuarios
+- Almacenamiento de datos del usuario en Firestore
+- Lectura de documentos desde la colección usuarios
 
 #### Instalación
 **Antes de comenzar, asegúrate de tener instalados los siguientes programas:**
@@ -37,9 +41,10 @@ npm install firebase @angular/fire
 #### 🔧 Tecnologías utilizadas
 
 - Firebase Authentication
+- Firebase Firestore
 - Firebase SDK v9+
 - JavaScript / TypeScript
-- Framework: [especificar si usaste React, Angular, Vanilla, etc.], en este caso Angular
+- Framework: Angular
 
 ---
 
@@ -87,6 +92,30 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 ```
+
+#### Dentro del archivo main.ts
+```js
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app.routes';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { firebaseConfig } from './environments/environment';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes),
+    provideFirebaseApp(() => initializeApp(firebaseConfig.firebaseConfig)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),  
+  ]
+}).catch(err => console.error(err));
+```
+
+En el archivo main.ts, se inicializa Firebase usando provideFirebaseApp, lo cual configura el entorno de Firebase y permite inyectar servicios como Auth y Firestore en toda la aplicación Angular mediante los providers provideAuth y provideFirestore.
+
 ## Inicio de Sesion Con Google
 
 #### En el auth.service.ts o auth.ts
@@ -163,3 +192,19 @@ Asi deberia verse al hacer click
 
 ![Ejemplo de login con Github](./Imagenes_Evidencias/GitHub_Example.png)
 
+## 📁 Estructura de colección usuarios en Firestore
+Al registrar un usuario nuevo mediante Firebase Authentication, se almacena también un documento en la colección usuarios.
+
+#### Ejemplo de documento en Firestore:
+```js
+{
+  "createdAt": "11 de junio de 2025, 11:21:03 a.m. UTC-5",
+  "email": "maria.perez@email.com",
+  "firstName": "María",
+  "lastName": "Pérez"
+}
+```
+
+#### 🖼️ Ejemplo visual
+
+![Ejemplo de documento en colección usuarios](./Imagenes_Evidencias/Documento_Example.png)
