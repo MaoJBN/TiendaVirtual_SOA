@@ -1,16 +1,30 @@
+
 <app-navbar></app-navbar>
 <section>
 <div class="register-container">
     <div class="register-box">
         <h2>Registro</h2>
         <form [formGroup]="registerForm" (ngSubmit)="enviarFormulario()">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">Nombre</label>
+                    <input type="text" id="firstName" placeholder="Ingresa tu nombre" formControlName="firstName">
+                    <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="error-messages">
+                        <small *ngIf="registerForm.get('firstName')?.errors?.['required']">El nombre es obligatorio.</small>
+                        <small *ngIf="registerForm.get('firstName')?.errors?.['minlength']">Debe tener al menos 2 caracteres.</small>
+                        <small *ngIf="registerForm.get('firstName')?.errors?.['pattern']">Solo se permiten letras y espacios.</small>
+                    </div>
+                </div>
 
-            <label for="username">Usuario</label>
-            <input type="text" id="username" placeholder="Ingresa tu usuario" formControlName="username">
-            <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
-                <small *ngIf="registerForm.get('username')?.errors?.['required']">El usuario es obligatorio.</small>
-                <small *ngIf="registerForm.get('username')?.errors?.['minlength']">Debe tener al menos 4 caracteres.</small>
-                <small *ngIf="registerForm.get('username')?.errors?.['pattern']">Caracter no permitido, solo letras o números</small>
+                <div class="form-group">
+                    <label for="lastName">Apellido</label>
+                    <input type="text" id="lastName" placeholder="Ingresa tu apellido" formControlName="lastName">
+                    <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="error-messages">
+                        <small *ngIf="registerForm.get('lastName')?.errors?.['required']">El apellido es obligatorio.</small>
+                        <small *ngIf="registerForm.get('lastName')?.errors?.['minlength']">Debe tener al menos 2 caracteres.</small>
+                        <small *ngIf="registerForm.get('lastName')?.errors?.['pattern']">Solo se permiten letras y espacios.</small>
+                    </div>
+                </div>
             </div>
 
             <label for="email">Correo Electrónico</label>

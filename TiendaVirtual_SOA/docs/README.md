@@ -1,68 +1,81 @@
-# Tienda Virtual SOA
+# 🛒 Tienda Virtual SOA
 
-## Introducción
-Tienda Virtual SOA es un proyecto web desarrollado en Angular que permite a los usuarios registrarse e iniciar sesión para explorar y comprar productos de manera sencilla y segura. El sistema cuenta con una interfaz intuitiva y funcionalidades que mejoran la experiencia de compra en línea.
+## 🧩 Introducción
+**Tienda Virtual SOA** es una plataforma web desarrollada con **Angular** y potenciada por **Firebase**, que permite a los usuarios registrarse, iniciar sesión y comprar productos de forma rápida, segura y con una interfaz moderna. El sistema está diseñado pensando en la experiencia del usuario, combinando rendimiento, seguridad y usabilidad.
 
-## Objetivo y Alcance
+## 🎯 Objetivo y Alcance
+
 ### Objetivo
-El objetivo del proyecto es desarrollar una tienda en línea eficiente y segura donde los usuarios puedan navegar por un catálogo de productos, agregarlos al carrito de compras y realizar transacciones de manera rápida y confiable.
+Crear una tienda en línea robusta, escalable y segura, donde los usuarios puedan:
+- Registrarse o iniciar sesión fácilmente.
+- Explorar productos con descripciones, precios e imágenes.
+- Agregar artículos al carrito y completar compras de forma ágil.
+- Contar con un panel administrativo para la gestión del negocio.
 
-### Alcance
-- Implementación de un sistema de autenticación de usuarios (registro y login).
-- Gestión de productos con detalles como precio, descripción e imágenes.
-- Carrito de compras con opciones para agregar y eliminar productos.
-- Integración de pasarela de pagos.
-- Panel de administración para gestionar productos y usuarios.
-- Diseño responsivo para una experiencia óptima en dispositivos móviles y computadoras.
+### Alcance del Proyecto
+- ✅ Registro e inicio de sesión con múltiples métodos: correo, Google, GitHub, Facebook.
+- ✅ Guardado de datos del usuario en Firestore.
+- ✅ Registro de cada inicio de sesión con timestamp.
+- ✅ Visualización y administración de usuarios y sus logins.
+- ✅ Gestión CRUD de productos.
+- ✅ Carrito de compras funcional con opción a eliminar productos.
+- ✅ Panel administrativo para control de productos y usuarios.
+- ✅ Interfaz responsiva para dispositivos móviles y escritorio.
+- ⚙️ Preparado para integración futura de pasarela de pagos.
 
-## Problemática
-Actualmente, muchas tiendas en línea presentan interfaces poco intuitivas y procesos de compra engorrosos, lo que puede desmotivar a los usuarios y reducir las ventas. Tienda Virtual SOA busca solucionar este problema ofreciendo una experiencia fluida y accesible, optimizando el flujo de compra y mejorando la seguridad en las transacciones.
+## 🧠 Problemática
+Muchas tiendas online carecen de una experiencia fluida y amigable, y presentan procesos de registro o compra poco eficientes. Esto causa abandono de carritos, pérdida de usuarios y reducción en ventas.  
+**Tienda Virtual SOA** busca resolver esto con:
+- Flujos de autenticación intuitivos.
+- Registro automático de actividad de usuario.
+- Un sistema de navegación y compra fluido y responsivo.
+- Un backend confiable basado en Firebase.
 
-## Impacto Esperado
-- Facilitar el acceso a productos mediante una interfaz intuitiva.
-- Mejorar la experiencia de usuario en compras en línea.
-- Aumentar la seguridad en las transacciones.
-- Posibilitar a pequeñas y medianas empresas digitalizar sus ventas.
+## 📈 Impacto Esperado
+- 💡 Mejorar significativamente la experiencia de usuario.
+- 🔐 Aumentar la seguridad y trazabilidad del sistema mediante registros de actividad.
+- 🛍️ Facilitar la compra online para cualquier usuario.
+- 💼 Permitir a pymes tener una tienda online moderna y funcional.
 
-## Tecnologías Utilizadas
-- **Frontend:** Angular
-- **Backend:** ...
-- **Base de Datos:** Firebase
-- **Autenticación:** JWT
-- **Despliegue:** Firebase Hosting / Vercel / AWS
+## 🛠️ Tecnologías Utilizadas
 
-## Gestión del Proyecto
-Para la gestión del desarrollo, se utilizarán herramientas colaborativas:
-- **Jira**: Para la planificación y seguimiento de tareas.
-- **GitHub**: Para el control de versiones y colaboración en el código.
-- **Angular**: Framework usado para la creacion y estructuracion del proyecto
-- **VSCode**: Entorno de desarrollo del proyecto por su personalizacion y compatibilidad gracias a sus extenciones
-- **Bootstrap**: Framework usado para el estilado del proyecto
-- **FireBase**: Usado para la generacion del sistema de autenticacion 
+| Tecnología     | Descripción |
+|----------------|-------------|
+| **Angular**    | Framework frontend moderno, basado en componentes. |
+| **Firebase**   | Base de datos en tiempo real, autenticación, y hosting. |
+| **Firestore**  | Almacenamiento estructurado para usuarios, productos y logs. |
+| **JWT**        | (Planeado) Seguridad en sesiones mediante tokens. |
+| **Bootstrap**  | Framework para estilos rápidos y responsivos. |
+| **GitHub**     | Repositorio del código fuente y control de versiones. |
+| **Jira**       | Planificación y gestión ágil del proyecto. |
+| **VSCode**     | Entorno de desarrollo preferido del equipo. |
 
+## 🔐 Autenticación y Registro de Usuarios
 
-## Roles del Equipo
-- **Scrum Master - Kevin:** Facilita el desarrollo ágil y la comunicación en el equipo.
-- **Desarrollador Frontend - Andrea:** Implementa la interfaz en Angular.
-- **Desarrollador Backend - Mauricio :** Desarrolla la lógica del servidor y la base de datos.
+- Los usuarios pueden registrarse con correo y contraseña, o mediante Google, GitHub o Facebook.
+- Al registrarse, se guarda en Firestore su información personal (nombre, apellido, email, fecha).
+- Cada vez que un usuario inicia sesión, se registra un **login log** con `timestamp`, email, nombre y apellido, en una subcolección del usuario.
+- Esta información permite visualizar la actividad del usuario desde el panel administrativo.
 
-## Instalación y Ejecución
-```sh
+## 👥 Roles del Equipo
+
+| Rol | Integrante | Descripción |
+|-----|------------|-------------|
+| **Scrum Master** | Kevin | Facilita el desarrollo ágil y organiza el trabajo del equipo. |
+| **Frontend Dev** | Andrea | Desarrolla la interfaz de usuario y la navegación en Angular. |
+| **Backend Dev** | Mauricio | Crea la lógica del servidor y gestiona Firestore, autenticación y más. |
+
+## 🚀 Instalación y Ejecución
+
+```bash
 # Clonar el repositorio
 git clone https://github.com/usuario/tienda-virtual-soa.git
 
-# Navegar al directorio del proyecto
+# Entrar al directorio del proyecto
 cd tienda-virtual-soa
 
 # Instalar dependencias
 npm install
 
-# Ejecutar la aplicación en modo desarrollo
+# Correr el proyecto en modo desarrollo
 ng serve --open
-```
-
-## Contribución
-Si deseas contribuir al proyecto, puedes hacerlo a través de Pull Requests en GitHub. Asegúrate de seguir las buenas prácticas de desarrollo y mantener un código limpio y documentado.
-
----
-🚀 **Tienda Virtual SOA** - Innovando la experiencia de compra en línea.
