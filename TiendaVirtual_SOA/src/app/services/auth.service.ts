@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 import { Observable, from } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
 import { Usuario, UsersService } from './users.service'; 
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -35,15 +36,24 @@ export class AuthService {
   // Registro de usuario
   register(email: string, password: string, firstName: string, lastName: string): Observable<any> {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
-      switchMap(userCredential => {
-        const uid = userCredential.user.uid;
+      switchMap(async (credential: UserCredential) => {
+        const user = credential.user;
+        const uid = user.uid;
+
         const userData: Usuario = {
           firstName,
           lastName,
-          email,
+          email: user.email || '',
           createdAt: new Date()
         };
-        return from(this.usersService.addLogin(uid, userData));
+
+        // Crear el documento si no existe (merge para no pisar datos)
+        await this.usersService.create(uid, userData);
+
+        // Registrar logeo (no sobrescribe)
+        await this.usersService.addLogin(uid, userData);
+
+        return credential;
       }),
       catchError(error => {
         console.error('Error en el registro:', error);
@@ -52,9 +62,35 @@ export class AuthService {
     );
   }
 
+
   // Iniciar sesión con correo y contraseña
   login(email: string, password: string): Observable<any> {
-    return from(signInWithEmailAndPassword(this.auth, email, password));
+    return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
+      switchMap((userCredential) => {
+        const uid = userCredential.user.uid;
+
+        // 1️⃣ Traer datos del usuario desde Firestore
+        return this.usersService.getById(uid).pipe(
+          switchMap((userData) => {
+            if (!userData) {
+              throw new Error('No se encontraron datos del usuario en Firestore.');
+            }
+
+            // 2️⃣ Registrar el login con los datos completos
+            return this.usersService.addUser(uid, {
+              firstName: userData.firstName,
+              lastName: userData.lastName,
+              email: userData.email,
+              createdAt: new Date()
+            });
+          })
+        );
+      }),
+      catchError((error) => {
+        console.error('❌ Error en login y registro de logueo:', error);
+        return throwError(() => error);
+      })
+    );
   }
 
 
